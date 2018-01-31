@@ -1,0 +1,277 @@
+﻿<Page x:Class="CitaMe.vista.paciente.RellenarEncuesta" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Admin"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Medium"
+    TextElement.FontSize="14"
+    TextOptions.TextFormattingMode="Ideal" 
+    TextOptions.TextRenderingMode="Auto"        
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+
+    <Grid>
+        <!-- BARRA DE MENU PRINCIPAL -->
+        <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+                <materialDesign:DrawerHost.LeftDrawerContent>
+                    <DockPanel MinWidth="212">
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                        <ListBox Margin="0 16 0 16" SelectedIndex="0"                         
+                                ItemsSource="{Binding DemoItems}"
+                                >
+                            <TextBlock Text="Inicio" Margin="32 0 32 0"></TextBlock>
+                            <TextBlock  Text="Mis citas" Margin="32 0 32 0"></TextBlock>
+                        </ListBox>
+                    </DockPanel>
+                </materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel>
+                    <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+                        <DockPanel>
+                            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                        />
+                            <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                                <StackPanel>
+                                    <Button Content="Salir" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">CitaMe - Paciente -</TextBlock>
+                        </DockPanel>
+                    </materialDesign:ColorZone>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="0" 
+                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                            <!-- Contenido -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Margin="300,50,300,0" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:Card Grid.Column="0"  materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                        <Grid Margin="20">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition MaxHeight="120" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                                <RowDefinition Height="*" />
+                                            </Grid.RowDefinitions>
+                                            <DockPanel Grid.Row="0" Margin="0,0,0,15" VerticalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="CommentCheckOutline" Height="27" Width="32" VerticalAlignment="Center"/>
+                                                <Label  Content="Rellenar encuesta" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="34"/>
+                                            </DockPanel>
+                                     
+                                            <GroupBox Grid.Row="1" Margin="0 0 0 16" Header="Cita" BorderThickness="0" materialDesign:ColorZoneAssist.Mode="Accent"
+                                                      materialDesign:ShadowAssist.ShadowDepth="Depth2" Style="{DynamicResource MaterialDesignGroupBox}">
+                                                <GroupBox.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon
+					                                            Width="32"
+					                                            Height="32"
+					                                            VerticalAlignment="Center"
+					                                            Kind="Calendar" />
+                                                            <TextBlock
+					                                            Margin="8,0,0,0"
+					                                            VerticalAlignment="Center"
+					                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+					                                            Text="{Binding}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GroupBox.HeaderTemplate>
+                                                <Grid Margin="5 7 5 7">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <StackPanel Grid.Column="0" Margin="0 0 20 0" >
+                                                        <TextBox Margin = "0 9 0 0" Text="Sara" IsReadOnly="True"
+	                                                        materialDesign:HintAssist.Hint="Nombre del médico"
+	                                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                                        <TextBox Margin = "0 9 0 0" Text="Familiar" IsReadOnly="True"
+	                                                        materialDesign:HintAssist.Hint="Especialidad"
+	                                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                                        <TextBox Margin = "0 9 0 0" Text="Mareos" IsReadOnly="True"
+	                                                        materialDesign:HintAssist.Hint="Motivo de la cita"
+	                                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1">
+                                                        <TextBox Margin = "0 9 0 0" IsReadOnly="True" Text="Sanz Nica"
+	                                                        materialDesign:HintAssist.Hint="Apellidos"
+	                                                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" />
+                                                        <DockPanel HorizontalAlignment="Right">
+                                                            <materialDesign:Chip HorizontalAlignment="Center"
+	                                                        Margin="0,20,15,4"
+	                                                        Content="11/12/2017"
+	                                                        IconBackground="{DynamicResource PrimaryHueLightBrush}"
+	                                                        IconForeground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                                                <materialDesign:Chip.Icon>
+                                                                    <materialDesign:PackIcon Kind="Calendar" />
+                                                                </materialDesign:Chip.Icon>
+                                                            </materialDesign:Chip>
+                                                            <materialDesign:Chip HorizontalAlignment="Center"
+	                                                        Margin="0, 15,4,4"
+	                                                        Content="14:10"
+	                                                        IconBackground="{DynamicResource PrimaryHueLightBrush}"
+	                                                        IconForeground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                                                <materialDesign:Chip.Icon>
+                                                                    <materialDesign:PackIcon Kind="Clock" />
+                                                                </materialDesign:Chip.Icon>
+                                                            </materialDesign:Chip>
+                                                        </DockPanel>
+
+                                                    </StackPanel>
+                                                </Grid>
+                                            </GroupBox>
+                                            <GroupBox Grid.Row="3" BorderThickness="0"
+                                                Margin="0 0 0 16"
+	                                            Header="Encuesta"
+	                                            Style="{DynamicResource MaterialDesignGroupBox}">
+                                                <GroupBox.HeaderTemplate>
+                                                    <DataTemplate>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <materialDesign:PackIcon
+					                                            Width="32"
+					                                            Height="32"
+					                                            VerticalAlignment="Center"
+					                                            Kind="Pencil" />
+                                                            <TextBlock
+					                                            Margin="8,0,0,0"
+					                                            VerticalAlignment="Center"
+					                                            Style="{StaticResource MaterialDesignSubheadingTextBlock}"
+					                                            Text="{Binding}" />
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </GroupBox.HeaderTemplate>
+
+                                                <Grid Margin="5 7 5 7">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto" />
+                                                        <RowDefinition Height="Auto" />
+
+                                                    </Grid.RowDefinitions>
+                                                    <TextBlock Grid.Row="0"
+				                                        VerticalAlignment="Center"
+				                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+				                                        TextWrapping="Wrap">                                            
+				                                        Por favor, complete la siguiente encuesta sobre su cita médica. 
+                                                        Indicando 1 para muy insatisfecho y 5 para muy satisfecho.
+                                                    </TextBlock>
+                                                    <StackPanel Grid.Column="0" Grid.Row="1">
+                                                        <ComboBox
+	                                                        HorizontalAlignment="Left"
+	                                                        materialDesign:ComboBoxAssist.ClassicMode="true"
+                                                            materialDesign:HintAssist.Hint="Puntualidad de la cita"
+                                                            Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+                                                            <ComboBoxItem>Puntual</ComboBoxItem>
+                                                            <ComboBoxItem>menos de 5 minutos tarde</ComboBoxItem>
+                                                            <ComboBoxItem>menos de 10 minutos tarde</ComboBoxItem>
+                                                            <ComboBoxItem>menos de 20 minutos tarde</ComboBoxItem>
+                                                            <ComboBoxItem>20 minutos o más tarde</ComboBoxItem>
+                                                        </ComboBox>
+                                                       <TextBlock Margin="0 15 0 0"
+				                                        VerticalAlignment="Center"
+				                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+				                                        TextWrapping="Wrap">                                            
+				                                        El médico ha sido amable y respetuoso:
+                                                        </TextBlock>
+                                                        <TextBlock Margin="0 15 0 0"
+				                                        VerticalAlignment="Center"
+				                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+				                                        TextWrapping="Wrap">                                            
+				                                        Ha explicado de forma clara su diagnóstico:
+                                                        </TextBlock>
+                                                        <TextBlock Margin="0 15 0 0"
+				                                        VerticalAlignment="Center"
+				                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+				                                        TextWrapping="Wrap">                                            
+				                                        Su satisfacción global es de:
+                                                        </TextBlock>
+                                                    </StackPanel>
+                                                    <StackPanel Grid.Column="1" Grid.Row="1">
+                                                        <TextBlock Margin="0 15 0 0"
+				                                        VerticalAlignment="Center"
+				                                        Style="{StaticResource MaterialDesignBody1TextBlock}"
+				                                        TextWrapping="Wrap">                                            
+                                                        </TextBlock>
+                                                        <materialDesign:RatingBar Margin="0 15 0 0"
+	                                                    
+	                                                     />
+                                                        <materialDesign:RatingBar Margin="0 15 0 0"
+	                                                    
+	                                                     />
+                                                        <materialDesign:RatingBar Margin="0 15 0 0"
+	                                                    
+	                                                     />
+                                                    </StackPanel>
+                                                </Grid>
+                                            </GroupBox>
+                                            <StackPanel Margin="0, 15, 0, 0" Grid.Row="4" HorizontalAlignment="Center">
+                                                <Button
+	                                                Click="BotonCompletarEncuesta"
+	                                                Style="{StaticResource MaterialDesignFlatButton}"
+	                                                ToolTip="Establecer diagnóstico para el paciente">
+                                                    COMPLETAR ENCUESTA
+                                                </Button>
+                                            </StackPanel>
+                                        </Grid>
+                                    </materialDesign:Card>
+                                </Grid>
+                                <materialDesign:PopupBox materialDesign:ShadowAssist.ShadowDepth="Depth4"
+                                        Style="{StaticResource MaterialDesignMultiFloatingActionLightPopupBox}"
+                                        PlacementMode="LeftAndAlignMiddles"
+                                        ToggleCheckedContentCommandParameter="wowsers"
+                                        UnfurlOrientation="Horizontal"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                        Margin="32" Grid.Row="1">
+                                    <materialDesign:PopupBox.ToggleCheckedContent>
+                                        <materialDesign:PackIcon
+                                                Width="24"
+                                                Height="24"
+                                                Kind="Pencil" />
+                                    </materialDesign:PopupBox.ToggleCheckedContent>
+                                    <StackPanel  Orientation="Horizontal">
+                                        <Button  ToolTip="Ver citas">
+                                            <materialDesign:PackIcon Width="24" Height="24" Kind="AccountMultiple" />
+                                        </Button>
+                                        <Button IsEnabled="False" ToolTip="Two">2</Button>
+                                        <Button ToolTip="Three">3</Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Grid>
+
+                            <!-- *********** FIN CONTENIDO -->
+                        </ScrollViewer>
+
+                        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}"
+                                            Grid.Row="1" />
+                    </Grid>
+                </DockPanel>
+            </materialDesign:DrawerHost>
+        </materialDesign:DialogHost>
+        <!-- *********** FIN BARRA DE MENU PRINCIPAL -->
+    </Grid>
+
+</Page>

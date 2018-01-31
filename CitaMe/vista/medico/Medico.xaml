@@ -1,0 +1,218 @@
+﻿<Page x:Class="CitaMe.vista.Medico" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Admin"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+    TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+    TextElement.FontWeight="Medium"
+    TextElement.FontSize="14"
+    TextOptions.TextFormattingMode="Ideal" 
+    TextOptions.TextRenderingMode="Auto"        
+    Background="{DynamicResource MaterialDesignPaper}"
+    FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto">
+
+    <Grid>
+        <!-- BARRA DE MENU PRINCIPAL -->
+        <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+            <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+                <materialDesign:DrawerHost.LeftDrawerContent>
+                    <DockPanel MinWidth="212">
+                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                        <ListBox x:Name="DemoItemsListBox" Margin="0 16 0 16" SelectedIndex="0"                         
+                                ItemsSource="{Binding DemoItems}"
+                                >
+                            <TextBlock MouseLeftButtonUp="BotonIrInicio" Text="Inicio" Margin="32 0 32 0"></TextBlock>
+                            <TextBlock MouseLeftButtonDown="BotonIrCitas" Text="Mis citas" Margin="32 0 32 0"></TextBlock>
+                        </ListBox>
+                    </DockPanel>
+                </materialDesign:DrawerHost.LeftDrawerContent>
+                <DockPanel>
+                    <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                            Mode="PrimaryMid" DockPanel.Dock="Top">
+                        <DockPanel>
+                            <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                                        x:Name="MenuToggleButton"/>
+                            <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
+                                <StackPanel>
+                                    <Button Content="Salir" Click="BotonSalir" />
+                                </StackPanel>
+                            </materialDesign:PopupBox>
+                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">CitaMe - Médico -</TextBlock>
+                        </DockPanel>
+                    </materialDesign:ColorZone>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <ScrollViewer Grid.Row="0" 
+                                  HorizontalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.HorizontalScrollBarVisibilityRequirement}"
+                                  VerticalScrollBarVisibility="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.VerticalScrollBarVisibilityRequirement}" 
+                                  Padding="{Binding ElementName=DemoItemsListBox, Path=SelectedItem.MarginRequirement}">
+                            <!-- Contenido -->
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                </Grid.RowDefinitions>
+                                <Grid Margin="50,50,0,0" VerticalAlignment="Top">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <materialDesign:Card Grid.Column="0"  materialDesign:ShadowAssist.ShadowDepth="Depth3">
+                                        <Grid Margin="20">
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition MaxHeight="120" />
+                                                <RowDefinition MaxHeight="400" />
+                                            </Grid.RowDefinitions>
+                                            <StackPanel Orientation="Horizontal" Grid.Row="0" Margin="0,0,0,15" VerticalAlignment="Center">
+                                                <materialDesign:PackIcon Kind="CalendarMultiple" Height="27" Width="32" VerticalAlignment="Center"/>
+                                                <Label  Content="Citas de hoy" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="18"/>
+                                                <Button materialDesign:ShadowAssist.ShadowDepth="Depth3" Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}"
+                                                    Click="BotonIrCitas" ToolTip="Ir a mis citas" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="420,0,0,0">
+                                                    <materialDesign:PackIcon Kind="ArrowRight" Height="24" Width="24" />
+                                                </Button>
+                                            </StackPanel>
+                                            <ListView SelectionChanged="CitaSeleccionada" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" x:Name="tablaCitasHoy" ItemsSource="{Binding usuariosReg}">
+                                                <ListView.View>
+                                                    <GridView>
+                                                        <GridViewColumn Header="Fecha" DisplayMemberBinding="{Binding Path=fecha_cita, StringFormat='dd/MM/yyyy'}" Width="85"/>
+                                                        <GridViewColumn Header="Hora" DisplayMemberBinding="{Binding Path=hora_cita, StringFormat='{}{0:hh}:{0:mm}'}" Width="80" />
+                                                        <GridViewColumn Header="Motivo" DisplayMemberBinding="{Binding motivo_cita}" Width="150" />
+                                                        <GridViewColumn Header="Paciente" DisplayMemberBinding="{Binding paciente.usuario.nombre_real_usr}" Width="100" />
+                                                        <GridViewColumn Header="" DisplayMemberBinding="{Binding paciente.usuario.apellidos_usr}" Width="150" />
+                                                    </GridView>
+                                                </ListView.View>
+                                            </ListView>
+
+                                        </Grid>
+                                    </materialDesign:Card>
+                                    <materialDesign:Flipper Visibility="Collapsed"  materialDesign:ShadowAssist.ShadowDepth="Depth4" x:Name="TarjetaCita"  Grid.Column="1"
+	                                    Margin="25,0,0,0"
+	                                    Style="{StaticResource MaterialDesignCardFlipper}">
+                                        <materialDesign:Flipper.FrontContent>
+                                            <Grid
+			                                    Width="320"
+			                                    Height="460">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="160" />
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <materialDesign:ColorZone VerticalAlignment="Stretch" Mode="Accent">
+                                                    <materialDesign:PackIcon x:Name="IconoPaciente"
+					                                            Width="120"
+					                                            Height="128"
+					                                            HorizontalAlignment="Center"
+					                                            VerticalAlignment="Center"
+					                                            Kind="CalendarClock" />
+                                                </materialDesign:ColorZone>
+                                                <Button materialDesign:ShadowAssist.ShadowDepth="Depth3" ToolTip="Cancelar cita"
+			                                        Margin="0,0,16,-20"
+			                                        HorizontalAlignment="Right"
+			                                        VerticalAlignment="Bottom"
+                                                    Click="BotonCancelarCita"
+			                                        Style="{StaticResource MaterialDesignFloatingActionMiniLightButton}">
+                                                    <materialDesign:PackIcon Kind="CalendarRemove" />
+                                                </Button>
+                                                <StackPanel
+				                                    Grid.Row="1"
+				                                    HorizontalAlignment="Center"
+				                                    VerticalAlignment="Center">
+                                                    <StackPanel Margin="0 5 0 0" Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <materialDesign:Chip HorizontalAlignment="Center" x:Name="HoraCita"
+	                                                        Margin="0,20,4,4"
+	                                                        Content="14:10"
+	                                                        IconBackground="{DynamicResource PrimaryHueLightBrush}"
+	                                                        IconForeground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                                            <materialDesign:Chip.Icon>
+                                                                <materialDesign:PackIcon Kind="Clock" />
+                                                            </materialDesign:Chip.Icon>
+                                                        </materialDesign:Chip>
+                                                        <materialDesign:Chip HorizontalAlignment="Center" x:Name="FechaCita"
+	                                                        Margin="10,20,4,4"
+	                                                        Content="11/12/2017"
+	                                                        IconBackground="{DynamicResource PrimaryHueLightBrush}"
+	                                                        IconForeground="{DynamicResource PrimaryHueLightForegroundBrush}">
+                                                            <materialDesign:Chip.Icon>
+                                                                <materialDesign:PackIcon Kind="Calendar" />
+                                                            </materialDesign:Chip.Icon>
+                                                        </materialDesign:Chip>
+                                                    </StackPanel>
+                                                    <GroupBox
+	                                                    Margin="0 10"
+	                                                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+	                                                    BorderThickness="0"
+	                                                    Header="Motivo: "
+                                                        materialDesign:ColorZoneAssist.Mode="Accent"
+	                                                    Style="{DynamicResource MaterialDesignGroupBox}">
+                                                        <TextBlock x:Name="TextoMotivo"
+		                                                    MaxWidth="300"
+		                                                    Margin="6,6,6,6"
+		                                                    TextWrapping="Wrap">
+                                                        </TextBlock>
+                                                    </GroupBox>
+                                                    <GroupBox
+	                                                    Margin="0 0"
+	                                                    materialDesign:ShadowAssist.ShadowDepth="Depth3"
+	                                                    BorderThickness="0"
+	                                                    Header="Paciente: "
+                                                        materialDesign:ColorZoneAssist.Mode="Accent"
+	                                                    Style="{DynamicResource MaterialDesignGroupBox}">
+                                                        <TextBlock x:Name="TextoPaciente"
+		                                                    MaxWidth="300"
+		                                                    Margin="6,6,6,6"
+		                                                    TextWrapping="Wrap">
+                                                        </TextBlock>
+                                                    </GroupBox>
+                                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <Button Click="BotonIniciarCita"
+					                                    Margin="0,4,0,0"
+					                                    Style="{StaticResource MaterialDesignFlatButton}">
+                                                            INICIAR CITA
+                                                        </Button>
+                                                    </StackPanel>
+                                                </StackPanel>
+                                            </Grid>
+                                        </materialDesign:Flipper.FrontContent>
+                                    </materialDesign:Flipper>
+                                </Grid>
+                                <materialDesign:PopupBox materialDesign:ShadowAssist.ShadowDepth="Depth4"
+                                        Style="{StaticResource MaterialDesignMultiFloatingActionLightPopupBox}"
+                                        PlacementMode="LeftAndAlignMiddles"
+                                        ToggleCheckedContentCommandParameter="wowsers"
+                                        UnfurlOrientation="Horizontal"
+                                        HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                                        Margin="32" Grid.Row="1">
+                                    <materialDesign:PopupBox.ToggleCheckedContent>
+                                        <materialDesign:PackIcon
+                                                Width="24"
+                                                Height="24"
+                                                Kind="Pencil" />
+                                    </materialDesign:PopupBox.ToggleCheckedContent>
+                                    <StackPanel  Orientation="Horizontal">
+                                        <Button  Click="BotonIrCitas" ToolTip="Ver citas">
+                                            <materialDesign:PackIcon Width="24" Height="24" Kind="AccountMultiple" />
+                                        </Button>
+                                        <Button IsEnabled="False" ToolTip="Two">2</Button>
+                                        <Button ToolTip="Three">3</Button>
+                                    </StackPanel>
+                                </materialDesign:PopupBox>
+                            </Grid>
+
+                            <!-- *********** FIN CONTENIDO -->
+                        </ScrollViewer>
+
+                        <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar"
+                                            Grid.Row="1" />
+                    </Grid>
+                </DockPanel>
+            </materialDesign:DrawerHost>
+        </materialDesign:DialogHost>
+        <!-- *********** FIN BARRA DE MENU PRINCIPAL -->
+    </Grid>
+
+</Page>

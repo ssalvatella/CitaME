@@ -1,0 +1,178 @@
+﻿<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{ACCF79E8-0D0E-4691-88FC-88706884D16A}</ProjectGuid>
+    <ProjectTypeGuids>{75D47B3D-D998-47ee-BD77-FC90B9124B40};{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{535C04D7-A2A5-47c7-83E0-B340A995CD1F}</ProjectTypeGuids>
+    <RootNamespace>CitaMe</RootNamespace>
+    <PreserveCase>True</PreserveCase>
+    <OutputName>CitaMe</OutputName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <OutputType>WinExe</OutputType>
+    <PublishUrl>Publish\</PublishUrl>
+    <StartupObject>Main</StartupObject>
+    <SQLDirectives>SQL(DBMAN=ODBC)</SQLDirectives>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <MaxError>100</MaxError>
+    <SourceFormat>Variable</SourceFormat>
+    <DefineConstants>DEBUG</DefineConstants>
+    <PlatformTarget>x64</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>false</DebugSymbols>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <MaxError>100</MaxError>
+    <SourceFormat>Variable</SourceFormat>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MaterialDesignColors">
+      <Name>MaterialDesignColors</Name>
+      <HintPath>..\packages\MaterialDesignColors.1.1.2\lib\net45\MaterialDesignColors.dll</HintPath>
+    </Reference>
+    <Reference Include="MaterialDesignThemes.Wpf">
+      <Name>MaterialDesignThemes.Wpf</Name>
+      <HintPath>..\packages\MaterialDesignThemes.2.3.1.953\lib\net45\MaterialDesignThemes.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+    <Reference Include="UIAutomationProvider">
+      <Name>UIAutomationProvider</Name>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="System" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Configuration" />
+    <Import Include="System.Windows" />
+    <Import Include="System.Text" />
+    <Import Include="System.Windows.Controls" />
+    <Import Include="System.Windows.Data" />
+    <Import Include="System.Windows.Documents" />
+    <Import Include="System.Windows.Input" />
+    <Import Include="System.Windows.Media" />
+    <Import Include="System.Windows.Media.Imaging" />
+    <Import Include="System.Windows.Navigation" />
+    <Import Include="System.Windows.Shapes" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </ApplicationDefinition>
+    <Compile Include="BaseDatos.cbl" />
+    <Compile Include="modelo\Cita.cbl" />
+    <Compile Include="modelo\Medico.cbl" />
+    <Compile Include="modelo\Paciente.cbl" />
+    <Compile Include="modelo\Usuario.cbl" />
+    <Compile Include="vista\admin\Admin.xaml.cbl">
+      <DependentUpon>Admin.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\admin\AdminUsuarios.xaml.cbl">
+      <DependentUpon>AdminUsuarios.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\Login.xaml.cbl">
+      <DependentUpon>Login.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\medico\IniciarCita.xaml.cbl">
+      <DependentUpon>IniciarCita.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\medico\Medico.xaml.cbl">
+      <DependentUpon>Medico.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\medico\VerCitas.xaml.cbl">
+      <DependentUpon>VerCitas.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\paciente\Paciente.xaml.cbl">
+      <DependentUpon>Paciente.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\paciente\RellenarEncuesta.xaml.cbl">
+      <DependentUpon>RellenarEncuesta.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="vista\VentanaPrincipal.xaml.cbl">
+      <DependentUpon>VentanaPrincipal.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="App.xaml.cbl">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="vista\admin\Admin.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\admin\AdminUsuarios.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\Login.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\medico\IniciarCita.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\medico\Medico.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\medico\VerCitas.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\paciente\Paciente.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\paciente\RellenarEncuesta.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="vista\VentanaPrincipal.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\Resources.Designer.cbl">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cbl">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cbl</LastGenOutput>
+    </EmbeddedResource>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cbl</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Micro Focus\Visual COBOL\v1.0\MicroFocus.COBOL.targets" />
+</Project>
